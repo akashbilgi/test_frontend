@@ -12,11 +12,10 @@ function App() {
   return (
     <div>
       <h1>Shapefile Viewer</h1>
-      <input type="file" accept=".shp" onChange={handleFileChange} />
+      <input type="file" accept=".shp, .dbf" onChange={handleFileChange} />
       {shapefile && <Map shapefile={shapefile} />}
     </div>
   );
 }
 
 export default App;
-
