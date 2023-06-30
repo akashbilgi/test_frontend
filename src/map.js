@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet-omnivore';
-import shp from 'shpjs'; // Import the shpjs library
+import shp from 'shpjs';
 
 function Map({ shapefile }) {
   const mapRef = useRef(null);
@@ -23,16 +23,19 @@ function Map({ shapefile }) {
       },
     });
 
-    // Read the shapefile and convert it to GeoJSON
-    shp(shapefile)
-      .then((geojson) => {
-        shapeLayer.addData(geojson);
-        shapeLayer.addTo(map);
-        map.fitBounds(shapeLayer.getBounds());
-      })
-      .catch((error) => {
-        console.log('Error reading shapefile:', error);
-      });
+    if (shapefile) {
+      // Read the shapefile and convert it to GeoJSON
+      shp(shapefile)
+        .then((geojson) => {
+          shapeLayer.addData(geojson);
+          shapeLayer.addTo(map);
+          map.fitBounds(shapeLayer.getBounds());
+          console.log('Shapefile imported:', geojson);
+        })
+        .catch((error) => {
+          console.log('Error reading shapefile:', error);
+        });
+    }
 
     return () => {
       map.remove();
